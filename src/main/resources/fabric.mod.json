@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "template",
+  "id": "bluemapadvancedmarker",
   "version": "${version}",
-  "name": "Template Mod",
+  "name": "BlueMap Advanced Marker Addon",
   "description": "Mod Description",
   "authors": [
     "Syorito Hatsuki"
@@ -11,24 +11,30 @@
     "homepage": "https://syoritohatsuki.dev/"
   },
   "license": "MIT Licence",
-  "icon": "assets/template/icon.png",
+  "icon": "assets/bluemapadvancedmarker/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
       {
         "adapter": "kotlin",
-        "value": "dev.syoritohatsuki.template.TemplateMod"
+        "value": "dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon"
       }
     ]
   },
   "mixins": [
-    "template.mixins.json"
+    "bluemapadvancedmarker.mixins.json"
   ],
+  "custom": {
+    "modmenu": {
+      "parent": "bluemap"
+    }
+  },
   "depends": {
     "fabricloader": ">=0.14.8",
     "fabric": "*",
+    "bluemap": "*",
     "fabric-language-kotlin": ">=1.8.2+kotlin.1.7.10",
-    "minecraft": "1.19.x",
+    "minecraft": ">=1.19",
     "java": ">=17"
   }
 }
