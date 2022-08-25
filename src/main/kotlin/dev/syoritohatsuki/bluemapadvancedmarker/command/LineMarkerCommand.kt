@@ -21,20 +21,16 @@ object LineMarkerCommand {
                                 CommandManager.argument("pos2", Vec3ArgumentType.vec3()).executes {
                                     BlueMapAdvancedMarkerAddon.logger.info("Execute start")
                                     val player = it.source.player
-                                    val pos1 = Vec3ArgumentType.getVec3(it, "pos1").toVector3d()
-                                    val pos2 = Vec3ArgumentType.getVec3(it, "pos1").toVector3d()
-
                                     if (player != null) {
                                         BlueMapHelper.createLine(
                                             StringArgumentType.getString(it, "name"),
                                             ColorArgumentType.getColor(it, "color").colorValue!!,
                                             it.source.world,
                                             player,
-                                            pos1,
-                                            pos2
+                                            Vec3ArgumentType.getVec3(it, "pos1").toVector3d(),
+                                            Vec3ArgumentType.getVec3(it, "pos2").toVector3d()
                                         )
                                     } else BlueMapAdvancedMarkerAddon.logger.info("Player not found")
-
                                     BlueMapAdvancedMarkerAddon.logger.info("Execute end")
                                     return@executes 1
                                 }
