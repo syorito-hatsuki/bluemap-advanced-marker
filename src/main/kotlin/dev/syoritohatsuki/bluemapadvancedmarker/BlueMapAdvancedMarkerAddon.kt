@@ -4,7 +4,9 @@ import com.mojang.logging.LogUtils
 import de.bluecolored.bluemap.api.BlueMapAPI
 import dev.syoritohatsuki.bluemapadvancedmarker.command.ExtrudeMarkerCommand
 import dev.syoritohatsuki.bluemapadvancedmarker.command.LineMarkerCommand
+import dev.syoritohatsuki.bluemapadvancedmarker.command.PositionCommand
 import dev.syoritohatsuki.bluemapadvancedmarker.command.ShapeMarkerCommand
+import dev.syoritohatsuki.bluemapadvancedmarker.util.PositionManager
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.player.AttackBlockCallback
@@ -13,6 +15,7 @@ import org.slf4j.Logger
 
 object BlueMapAdvancedMarkerAddon : ModInitializer {
     val logger: Logger = LogUtils.getLogger()
+    val positionManager = PositionManager
 
     override fun onInitialize() {
         logger.info("${javaClass.simpleName} initialized")
@@ -21,6 +24,7 @@ object BlueMapAdvancedMarkerAddon : ModInitializer {
             ShapeMarkerCommand.register(dispatcher)
             LineMarkerCommand.register(dispatcher)
             ExtrudeMarkerCommand.register(dispatcher)
+            PositionCommand.register(dispatcher)
         })
 
         AttackBlockCallback.EVENT.register(AttackBlockCallback { player, world, hand, pos, direction ->
