@@ -23,6 +23,10 @@ repositories {
             includeGroup("maven.modrinth")
         }
     }
+    maven {
+        name = "JitPack"
+        setUrl("https://jitpack.io")
+    }
 }
 
 dependencies {
@@ -44,8 +48,8 @@ dependencies {
     val fabricKotlinVersion: String by project
     modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
 
-    val blueMapVersion: String by project
-    modImplementation("maven.modrinth", "BlueMap", blueMapVersion)
+    val blueMapApiVersion: String by project
+    implementation("com.github.BlueMap-Minecraft", "BlueMapAPI", blueMapApiVersion)
 }
 
 tasks {
