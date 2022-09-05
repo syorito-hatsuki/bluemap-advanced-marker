@@ -1,16 +1,16 @@
 package dev.syoritohatsuki.bluemapadvancedmarker.command
 
+import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
-import net.minecraft.text.Text
 
-object ExtrudeMarkerCommand {
-    fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
+class ExtrudeMarkerCommand(dispatcher: CommandDispatcher<ServerCommandSource>) {
+    init {
         dispatcher.register(
             CommandManager.literal("marker").then(CommandManager.literal("extrude").executes { context ->
-                context.source.player?.sendMessage(Text.literal("Shape command executed"))
-                return@executes 1
+                TODO("Extrude command")
+                return@executes Command.SINGLE_SUCCESS
             })
         )
     }

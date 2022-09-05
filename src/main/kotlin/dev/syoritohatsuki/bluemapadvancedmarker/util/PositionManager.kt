@@ -12,4 +12,14 @@ object PositionManager {
     fun clearPositions() = positions.clear()
 
     fun getBlueMapPositions() = positions.map { it.toVector3d() }
+
+    fun getCount() = positions.size
+
+    fun getAverageHeight(): Float {
+        var value = 0.0
+        positions.forEach {
+            value += it.y
+        }
+        return (value / positions.size).toFloat()
+    }
 }
