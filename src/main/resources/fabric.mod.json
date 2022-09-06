@@ -21,9 +21,7 @@
       }
     ]
   },
-  "mixins": [
-    "bluemapadvancedmarker.mixins.json"
-  ],
+  "mixins": [],
   "custom": {
     "modmenu": {
       "parent": "bluemap"
