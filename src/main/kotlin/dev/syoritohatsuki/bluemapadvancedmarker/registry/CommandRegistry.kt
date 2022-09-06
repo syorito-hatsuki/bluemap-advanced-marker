@@ -6,11 +6,12 @@ import net.minecraft.server.command.ServerCommandSource
 
 object CommandRegistry {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
-        ExtrudeMarkerCommand(dispatcher)
-        LineMarkerCommand(dispatcher)
-        MarkerIconsCommand(dispatcher)
-        PositionCommand(dispatcher)
-        PointMarkerCommand(dispatcher)
-        ShapeMarkerCommand(dispatcher)
+        HelpCommand.register(dispatcher)
+        ExtrudeMarkerCommand.register(dispatcher)
+        LineMarkerCommand.register(dispatcher)
+        MarkerIconsCommand.register(dispatcher)
+        PositionCommand.register(dispatcher)
+        PointMarkerCommand.register(dispatcher)
+        ShapeMarkerCommand.register(dispatcher)
     }
 }

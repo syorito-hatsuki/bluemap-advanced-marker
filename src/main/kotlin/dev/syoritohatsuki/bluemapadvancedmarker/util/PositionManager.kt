@@ -22,4 +22,8 @@ object PositionManager {
         }
         return (value / positions.size).toFloat()
     }
+
+    fun getMinHeight(): Float = positions.maxOf { it.y }.toFloat()
+
+    fun getMaxHeight(): Float = positions.minOf { it.y }.toFloat()
 }

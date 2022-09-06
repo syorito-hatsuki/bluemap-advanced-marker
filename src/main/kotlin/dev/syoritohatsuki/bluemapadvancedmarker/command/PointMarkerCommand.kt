@@ -9,14 +9,12 @@ import dev.syoritohatsuki.bluemapadvancedmarker.util.MarkerHelper
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 
-class PointMarkerCommand(dispatcher: CommandDispatcher<ServerCommandSource>) {
-    init {
+object PointMarkerCommand {
+    fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
             CommandManager.literal("marker").then(
                 CommandManager.literal("point").then(
-                    CommandManager.argument("name", StringArgumentType.string()).then(
-                        CommandManager.argument("iconName", StringArgumentType.word()).executes { executePoint(it) })
-                )
+                    CommandManager.argument("name", StringArgumentType.string()).executes { executePoint(it) })
             )
         )
     }
@@ -24,7 +22,6 @@ class PointMarkerCommand(dispatcher: CommandDispatcher<ServerCommandSource>) {
     private fun executePoint(context: CommandContext<ServerCommandSource>): Int {
         MarkerHelper.createPoint(
             StringArgumentType.getString(context, "name"),
-            StringArgumentType.getString(context, "iconName"),
             context.source.world,
             context.source.playerOrThrow,
             BlueMapAdvancedMarkerAddon.positionManager.getBlueMapPositions()

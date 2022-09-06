@@ -10,8 +10,8 @@ import net.minecraft.command.argument.ColorArgumentType
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 
-class LineMarkerCommand(dispatcher: CommandDispatcher<ServerCommandSource>) {
-    init {
+object LineMarkerCommand {
+    fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
             CommandManager.literal("marker").then(
                 CommandManager.literal("line").then(
