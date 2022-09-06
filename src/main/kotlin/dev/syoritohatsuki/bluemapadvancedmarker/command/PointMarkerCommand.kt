@@ -4,7 +4,6 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
-import dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon
 import dev.syoritohatsuki.bluemapadvancedmarker.util.MarkerHelper
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
@@ -23,8 +22,7 @@ object PointMarkerCommand {
         MarkerHelper.createPoint(
             StringArgumentType.getString(context, "name"),
             context.source.world,
-            context.source.playerOrThrow,
-            BlueMapAdvancedMarkerAddon.positionManager.getBlueMapPositions()
+            context.source.playerOrThrow
         )
         return Command.SINGLE_SUCCESS
     }

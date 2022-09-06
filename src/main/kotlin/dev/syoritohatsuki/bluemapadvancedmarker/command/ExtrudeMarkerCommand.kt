@@ -4,7 +4,6 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
-import dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon.positionManager
 import dev.syoritohatsuki.bluemapadvancedmarker.util.MarkerHelper
 import net.minecraft.command.argument.ColorArgumentType
 import net.minecraft.server.command.CommandManager
@@ -28,10 +27,7 @@ object ExtrudeMarkerCommand {
             StringArgumentType.getString(context, "name"),
             ColorArgumentType.getColor(context, "color").colorValue!!,
             context.source.world,
-            context.source.playerOrThrow,
-            positionManager.getBlueMapPositions().map { it.toVector2() },
-            positionManager.getMinHeight(),
-            positionManager.getMaxHeight()
+            context.source.playerOrThrow
         )
         return Command.SINGLE_SUCCESS
     }

@@ -1,29 +1,56 @@
 package dev.syoritohatsuki.bluemapadvancedmarker.util
 
+import com.flowpowered.math.vector.Vector3d
 import net.minecraft.util.math.Vec3d
+import java.util.*
 
 object PositionManager {
-    private val positions = mutableSetOf<Vec3d>()
+    private val playerPositions = mutableMapOf<UUID, MutableSet<Vec3d>>()
 
-    fun addPosition(vec3d: Vec3d) = positions.add(vec3d)
-
-    fun removePosition(vec3d: Vec3d) = positions.remove(vec3d)
-
-    fun clearPositions() = positions.clear()
-
-    fun getBlueMapPositions() = positions.map { it.toVector3d() }
-
-    fun getCount() = positions.size
-
-    fun getAverageHeight(): Float {
-        var value = 0.0
-        positions.forEach {
-            value += it.y
+    fun addPosition(uuid: UUID, vec3d: Vec3d) {
+        (playerPositions[uuid] ?: mutableSetOf()).apply {
+            add(vec3d)
+            playerPositions[uuid] = this
         }
-        return (value / positions.size).toFloat()
     }
 
-    fun getMinHeight(): Float = positions.maxOf { it.y }.toFloat()
+    fun removePosition(uuid: UUID, vec3d: Vec3d) {
+        (playerPositions[uuid] ?: mutableSetOf()).apply {
+            remove(vec3d)
+            playerPositions[uuid] = this
+        }
+    }
 
-    fun getMaxHeight(): Float = positions.minOf { it.y }.toFloat()
+    fun clearPositions(uuid: UUID) {
+        (playerPositions[uuid] ?: mutableSetOf()).apply {
+            clear()
+            playerPositions[uuid] = this
+        }
+    }
+
+    fun getBlueMapPositions(uuid: UUID): Set<Vector3d> {
+        return mutableSetOf<Vector3d>().apply {
+            (playerPositions[uuid] ?: mutableSetOf()).forEach {
+                add(it.toVector3d())
+            }
+        }
+    }
+
+    fun getCount(uuid: UUID): Int = (playerPositions[uuid] ?: mutableSetOf()).size
+
+    fun getAverageHeight(uuid: UUID): Float {
+        var value = 0.0
+        (playerPositions[uuid] ?: mutableSetOf()).apply {
+            forEach { value += it.y }
+            return (value / size).toFloat()
+        }
+    }
+
+    fun getMinHeight(uuid: UUID): Float {
+        return (playerPositions[uuid] ?: mutableSetOf()).minOf { it.y }.toFloat()
+    }
+
+    fun getMaxHeight(uuid: UUID): Float {
+        return (playerPositions[uuid] ?: mutableSetOf()).minOf { it.y }.toFloat()
+    }
 }

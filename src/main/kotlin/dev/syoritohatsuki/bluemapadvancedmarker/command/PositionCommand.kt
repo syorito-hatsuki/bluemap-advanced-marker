@@ -27,7 +27,7 @@ object PositionCommand {
 
     private fun executeAdd(context: CommandContext<ServerCommandSource>): Int {
         context.source.playerOrThrow.apply {
-            positionManager.addPosition(pos)
+            positionManager.addPosition(uuid, pos)
             context.source.sendFeedback(
                 Text.of("Position added to list [ X: ${pos.shortX()} | Y: ${pos.shortY()} | Z: ${pos.shortZ()} ]"),
                 false
@@ -38,7 +38,7 @@ object PositionCommand {
 
     private fun executeRemove(context: CommandContext<ServerCommandSource>): Int {
         context.source.playerOrThrow.apply {
-            positionManager.removePosition(pos)
+            positionManager.removePosition(uuid, pos)
             context.source.sendFeedback(
                 Text.of("Position [ X: ${pos.shortX()} | Y: ${pos.shortY()} | Z: ${pos.shortZ()} ] removed from list"),
                 false
@@ -48,15 +48,18 @@ object PositionCommand {
     }
 
     private fun executeClear(context: CommandContext<ServerCommandSource>): Int {
-        positionManager.clearPositions()
+        positionManager.clearPositions(context.source.playerOrThrow.uuid)
         context.source.sendFeedback(Text.of("Position list cleared"), false)
         return Command.SINGLE_SUCCESS
     }
 
     private fun executeList(context: CommandContext<ServerCommandSource>): Int {
-        context.source.sendFeedback(Text.of(positionManager.getBlueMapPositions().joinToString("") { vector3d ->
-            "X: ${vector3d.shortX()} | Y: ${vector3d.shortY()} | Z: ${vector3d.shortZ()}\n"
-        }), false)
+        context.source.sendFeedback(
+            Text.of(
+                positionManager.getBlueMapPositions(context.source.playerOrThrow.uuid).joinToString("") { vector3d ->
+                    "X: ${vector3d.shortX()} | Y: ${vector3d.shortY()} | Z: ${vector3d.shortZ()}\n"
+                }), false
+        )
         return Command.SINGLE_SUCCESS
     }
 
