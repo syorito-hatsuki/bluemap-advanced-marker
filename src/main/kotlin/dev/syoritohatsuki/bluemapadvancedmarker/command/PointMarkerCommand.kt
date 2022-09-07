@@ -4,6 +4,7 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
+import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry.commandLiteral
 import dev.syoritohatsuki.bluemapadvancedmarker.util.MarkerHelper
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
@@ -11,7 +12,7 @@ import net.minecraft.server.command.ServerCommandSource
 object PointMarkerCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
-            CommandManager.literal("marker").then(
+            CommandManager.literal(commandLiteral).then(
                 CommandManager.literal("point").then(
                     CommandManager.argument("name", StringArgumentType.string()).executes { executePoint(it) })
             )

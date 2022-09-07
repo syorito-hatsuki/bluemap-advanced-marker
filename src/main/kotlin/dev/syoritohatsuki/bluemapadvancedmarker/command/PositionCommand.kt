@@ -4,6 +4,7 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.context.CommandContext
 import dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon.positionManager
+import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry
 import dev.syoritohatsuki.bluemapadvancedmarker.util.shortX
 import dev.syoritohatsuki.bluemapadvancedmarker.util.shortY
 import dev.syoritohatsuki.bluemapadvancedmarker.util.shortZ
@@ -14,7 +15,7 @@ import net.minecraft.text.Text
 object PositionCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
-            CommandManager.literal("marker")
+            CommandManager.literal(CommandRegistry.commandLiteral)
                 .then(
                     CommandManager.literal("position")
                         .then(CommandManager.literal("add").executes { executeAdd(it) })

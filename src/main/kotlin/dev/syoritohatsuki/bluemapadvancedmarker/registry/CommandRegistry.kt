@@ -5,6 +5,7 @@ import dev.syoritohatsuki.bluemapadvancedmarker.command.*
 import net.minecraft.server.command.ServerCommandSource
 
 object CommandRegistry {
+    const val commandLiteral = "bam"
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         HelpCommand.register(dispatcher)
         ExtrudeMarkerCommand.register(dispatcher)
