@@ -20,11 +20,8 @@ object HelpCommand {
             Text.literal(
                 StringBuilder().apply {
                     append("----------[ BAM Help ]----------\n")
-                    append("/$commandLiteral position add|remove|list|clear\n")
-                    append("/$commandLiteral point <name>\n")
-                    append("/$commandLiteral line <name> <color>\n")
-                    append("/$commandLiteral shape <name> <color>\n")
-                    append("/$commandLiteral extrude <name> <color>")
+                    append("/$commandLiteral icons\n")
+                    append("/$commandLiteral point <name> <icon>\n")
                     append("--------------------------------")
                 }.toString()
             ), false

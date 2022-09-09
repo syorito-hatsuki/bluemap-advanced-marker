@@ -12,7 +12,10 @@ object MarkerIconsCommand {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
                 CommandManager.literal("icons").executes {
-                    it.source.sendFeedback(Text.literal("https://github.com/<repo>/<list_of_icons>"), false)
+                    it.source.sendFeedback(
+                        Text.literal("https://github.com/syorito-hatsuki/bluemap-advanced-marker/blob/master/README.md#Icons"),
+                        false
+                    )
                     return@executes SINGLE_SUCCESS
                 }
             )
