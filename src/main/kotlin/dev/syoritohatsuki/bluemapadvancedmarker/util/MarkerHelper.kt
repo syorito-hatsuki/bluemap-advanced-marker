@@ -14,17 +14,17 @@ object MarkerHelper {
     fun createPoint(title: String, icon: String, world: World, playerEntity: PlayerEntity) {
         blueMapAPI.ifPresentOrElse({ mapAPI ->
             mapAPI.getWorld(world).ifPresentOrElse({ blueMapWorld ->
-                val uuid = playerEntity.uuid
+                playerEntity.uuid.apply {
+                    if (blueMapWorld.maps.toList()[0].markerSets["$this"] == null)
+                        blueMapWorld.maps.toList()[0].markerSets["$this"] =
+                            MarkerSet.builder().label(playerEntity.displayName.string).build()
 
-                if (blueMapWorld.maps.toList()[0].markerSets["$uuid"] == null)
-                    blueMapWorld.maps.toList()[0].markerSets["$uuid"] =
-                        MarkerSet.builder().label(playerEntity.displayName.string).build()
-
-                blueMapWorld.maps.toList()[0].markerSets["$uuid"]!!.markers["$uuid/$title"] = POIMarker.toBuilder()
-                    .label(title)
-                    .icon(ConfigManager.read().icons[icon], 0, 0)
-                    .position(playerEntity.pos.toVector3d())
-                    .build()
+                    blueMapWorld.maps.toList()[0].markerSets["$this"]!!.markers["$this/$title"] = POIMarker.toBuilder()
+                        .label(title)
+                        .icon(ConfigManager.read().icons[icon], 0, 0)
+                        .position(playerEntity.pos.toVector3d())
+                        .build()
+                }
             }, { logger.info("BlueMapWorld not present") })
         }, { logger.info("MapAPI not present") })
     }
