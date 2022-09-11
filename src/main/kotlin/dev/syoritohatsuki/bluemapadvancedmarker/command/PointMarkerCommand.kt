@@ -14,7 +14,10 @@ object PointMarkerCommand {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
                 CommandManager.literal("point").then(
-                    CommandManager.argument("name", StringArgumentType.string()).executes { executePoint(it) })
+                    CommandManager.argument("name", StringArgumentType.string()).then(
+                        CommandManager.argument("icon", StringArgumentType.word()).executes { executePoint(it) }
+                    )
+                )
             )
         )
     }
@@ -22,6 +25,7 @@ object PointMarkerCommand {
     private fun executePoint(context: CommandContext<ServerCommandSource>): Int {
         MarkerHelper.createPoint(
             StringArgumentType.getString(context, "name"),
+            StringArgumentType.getString(context, "icon"),
             context.source.world,
             context.source.playerOrThrow
         )
