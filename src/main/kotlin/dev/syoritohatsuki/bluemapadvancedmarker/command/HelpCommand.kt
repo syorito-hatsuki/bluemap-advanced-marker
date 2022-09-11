@@ -11,7 +11,8 @@ import net.minecraft.text.Text
 object HelpCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
-            CommandManager.literal(commandLiteral).then(CommandManager.literal("help").executes { executeHelp(it) })
+            CommandManager.literal(commandLiteral).executes { executeHelp(it) }
+                .then(CommandManager.literal("help").executes { executeHelp(it) })
         )
     }
 
@@ -19,10 +20,10 @@ object HelpCommand {
         context.source.sendFeedback(
             Text.literal(
                 StringBuilder().apply {
-                    append("----------[ BAM Help ]----------\n")
-                    append("/$commandLiteral icons\n")
-                    append("/$commandLiteral point <name> <icon>\n")
-                    append("--------------------------------")
+                    append("\n----------[ BAM Help ]----------")
+                    append("\n/$commandLiteral icons")
+                    append("\n/$commandLiteral point <name> <icon>")
+                    append("\n--------------------------------")
                 }.toString()
             ), false
         )
