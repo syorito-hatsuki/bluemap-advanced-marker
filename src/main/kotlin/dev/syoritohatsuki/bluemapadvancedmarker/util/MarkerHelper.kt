@@ -14,15 +14,17 @@ object MarkerHelper {
     fun createPoint(title: String, icon: String, world: World, playerEntity: PlayerEntity) {
         blueMapAPI.ifPresentOrElse({ mapAPI ->
             mapAPI.getWorld(world).ifPresentOrElse({ blueMapWorld ->
-                MarkerSet.builder().label(playerEntity.displayName.string).build().apply {
-                    val uuid = playerEntity.uuid
-                    markers["$uuid/$title"] = POIMarker.toBuilder()
-                        .label(title)
-                        .icon(ConfigManager.read().icons[icon], 0, 0)
-                        .position(playerEntity.pos.toVector3d())
-                        .build()
-                    blueMapWorld.maps.toList()[0].markerSets["$uuid"] = this
-                }
+                val uuid = playerEntity.uuid
+
+                if (blueMapWorld.maps.toList()[0].markerSets["$uuid"] == null)
+                    blueMapWorld.maps.toList()[0].markerSets["$uuid"] =
+                        MarkerSet.builder().label(playerEntity.displayName.string).build()
+
+                blueMapWorld.maps.toList()[0].markerSets["$uuid"]!!.markers["$uuid/$title"] = POIMarker.toBuilder()
+                    .label(title)
+                    .icon(ConfigManager.read().icons[icon], 0, 0)
+                    .position(playerEntity.pos.toVector3d())
+                    .build()
             }, { logger.info("BlueMapWorld not present") })
         }, { logger.info("MapAPI not present") })
     }
