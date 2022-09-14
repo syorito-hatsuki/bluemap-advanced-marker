@@ -23,7 +23,7 @@ object HelpCommand {
                     append("\n----------[ BAM Help ]----------")
                     append("\n/$commandLiteral icons")
                     append("\n/$commandLiteral point <name> <icon>")
-                    append("\n--------------------------------")
+                    append("\n------------------------------")
                 }.toString()
             ), false
         )
