@@ -30,9 +30,6 @@ repositories {
 }
 
 dependencies {
-    //FOR SERVER STARTING
-    //implementation("io.netty", "netty-all", "4.1.79.Final")
-
     val minecraftVersion: String by project
     minecraft("com.mojang", "minecraft", minecraftVersion)
 
