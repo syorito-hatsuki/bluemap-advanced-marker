@@ -21,7 +21,7 @@ object MarkerHelper {
 
                     blueMapWorld.maps.toList()[0].markerSets["$this"]!!.markers["$this/$title"] = POIMarker.toBuilder()
                         .label(title)
-                        .icon(ConfigManager.read().icons[icon], 0, 0)
+                        .icon(ConfigManager.read().icons[icon] ?: ConfigManager.read().icons["mansion"], 0, 0)
                         .position(playerEntity.pos.toVector3d())
                         .build()
                 }
