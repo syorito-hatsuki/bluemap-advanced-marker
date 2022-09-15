@@ -35,7 +35,7 @@ object ConfigManager {
     }
 
     fun readMarkerSet(worldId: String) = mutableMapOf<String, MarkerSet>().apply {
-        File(bluemapMarkerSetsDir, worldId).listFiles().map {
+        File(bluemapMarkerSetsDir, worldId).listFiles()?.map {
             put(
                 it.nameWithoutExtension,
                 MarkerGson.INSTANCE.fromJson(it.readText(), MarkerSet::class.java)
