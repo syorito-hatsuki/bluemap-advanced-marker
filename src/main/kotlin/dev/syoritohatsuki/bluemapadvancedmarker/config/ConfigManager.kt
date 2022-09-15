@@ -28,9 +28,12 @@ object ConfigManager {
     fun read(): Config = json.decodeFromString(configFile.readText())
 
     fun writeMarkerSet(worldId: String, uuid: String, markerSet: MarkerSet) {
-        File(bluemapMarkerSetsDir, "$worldId/$uuid.json").apply {
-            createNewFile()
-            writeText(MarkerGson.INSTANCE.toJson(markerSet))
+        File(bluemapMarkerSetsDir, worldId).apply {
+            if (!exists()) mkdir()
+            File(this, "$uuid.json").apply {
+                if (!exists()) createNewFile()
+                writeText(MarkerGson.INSTANCE.toJson(markerSet))
+            }
         }
     }
 
