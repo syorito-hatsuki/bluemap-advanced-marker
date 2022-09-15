@@ -28,20 +28,18 @@ object ConfigManager {
     fun read(): Config = json.decodeFromString(configFile.readText())
 
     fun writeMarkerSet(worldId: String, uuid: String, markerSet: MarkerSet) {
-        File(bluemapMarkerSetsDir, "${worldId}_${uuid}.json").apply {
+        File(bluemapMarkerSetsDir, "$worldId/$uuid.json").apply {
             createNewFile()
             writeText(MarkerGson.INSTANCE.toJson(markerSet))
         }
     }
 
     fun readMarkerSet(worldId: String) = mutableMapOf<String, MarkerSet>().apply {
-        bluemapMarkerSetsDir.listFiles().forEach {
-            if (it.name.startsWith(worldId)) {
-                put(
-                    it.nameWithoutExtension.removePrefix("${worldId}_"),
-                    MarkerGson.INSTANCE.fromJson(it.readText(), MarkerSet::class.java)
-                )
-            }
+        File(bluemapMarkerSetsDir, worldId).listFiles().map {
+            put(
+                it.nameWithoutExtension,
+                MarkerGson.INSTANCE.fromJson(it.readText(), MarkerSet::class.java)
+            )
         }
     }
 }
