@@ -14,8 +14,16 @@ object PointMarkerCommand {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
                 CommandManager.literal("point").then(
-                    CommandManager.argument("name", StringArgumentType.string()).then(
-                        CommandManager.argument("icon", StringArgumentType.word()).executes { executePoint(it) }
+                    CommandManager.literal("add").then(
+                        CommandManager.argument("name", StringArgumentType.string()).then(
+                            CommandManager.argument("icon", StringArgumentType.word()).executes { executePoint(it) }
+                        )
+                    )
+                ).then(
+                    CommandManager.literal("remove").then(
+                        CommandManager.argument("name", StringArgumentType.string()).executes {
+                            TODO("Remove marker by name")
+                        }
                     )
                 )
             )

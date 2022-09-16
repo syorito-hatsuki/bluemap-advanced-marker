@@ -12,6 +12,7 @@ object MarkerHelper {
     private val blueMapAPI = BlueMapAPI.getInstance()
 
     fun createPoint(title: String, icon: String, world: World, playerEntity: PlayerEntity) {
+        TODO("Add verify that name not already in use")
         blueMapAPI.ifPresentOrElse({ mapAPI ->
             mapAPI.getWorld(world).ifPresentOrElse({ blueMapWorld ->
                 playerEntity.uuid.apply {
