@@ -4,6 +4,7 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
+import de.bluecolored.bluemap.api.BlueMapAPI
 import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry.commandLiteral
 import dev.syoritohatsuki.bluemapadvancedmarker.util.MarkerHelper
 import net.minecraft.server.command.CommandManager
@@ -16,13 +17,13 @@ object PointMarkerCommand {
                 CommandManager.literal("point").then(
                     CommandManager.literal("add").then(
                         CommandManager.argument("name", StringArgumentType.string()).then(
-                            CommandManager.argument("icon", StringArgumentType.word()).executes { executePoint(it) }
+                            CommandManager.argument("icon", StringArgumentType.word()).executes { executeAddPoint(it) }
                         )
                     )
                 ).then(
                     CommandManager.literal("remove").then(
                         CommandManager.argument("name", StringArgumentType.string()).executes {
-                            TODO("Remove marker by name")
+                            executeRemovePoint(it)
                         }
                     )
                 )
@@ -30,7 +31,7 @@ object PointMarkerCommand {
         )
     }
 
-    private fun executePoint(context: CommandContext<ServerCommandSource>): Int {
+    private fun executeAddPoint(context: CommandContext<ServerCommandSource>): Int {
         MarkerHelper.createPoint(
             StringArgumentType.getString(context, "name"),
             StringArgumentType.getString(context, "icon"),
@@ -38,5 +39,15 @@ object PointMarkerCommand {
             context.source.playerOrThrow
         )
         return Command.SINGLE_SUCCESS
+    }
+
+    private fun executeRemovePoint(context: CommandContext<ServerCommandSource>): Int {
+        BlueMapAPI.getInstance().get().maps.forEach { map ->
+            map.markerSets.values.forEach {
+                it.markers.remove(StringArgumentType.getString(context, "name"))
+            }
+        }
+        return Command.SINGLE_SUCCESS
+        TODO("Remove marker by name")
     }
 }
