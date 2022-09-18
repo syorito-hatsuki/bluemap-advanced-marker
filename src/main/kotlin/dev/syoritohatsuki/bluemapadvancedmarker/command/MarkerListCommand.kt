@@ -23,7 +23,7 @@ object MarkerListCommand {
         )
     }
 
-    private fun executeUserMarkers(context: CommandContext<ServerCommandSource>): Int {
+    private fun executeAllUsersMarkers(context: CommandContext<ServerCommandSource>): Int {
         BlueMapAPI.getInstance().get().maps.forEach { map ->
             map.markerSets.forEach { (name, value) ->
                 value.markers.values.forEach {
@@ -43,7 +43,7 @@ object MarkerListCommand {
         TODO("List all markers of specify user (User level)")
     }
 
-    private fun executeAllUsersMarkers(context: CommandContext<ServerCommandSource>): Int {
+    private fun executeUserMarkers(context: CommandContext<ServerCommandSource>): Int {
         BlueMapAPI.getInstance().get().maps.forEach { map ->
             map.markerSets.filter {
                 it.key.contains(EntityArgumentType.getPlayer(context, "player").uuid.toString())
