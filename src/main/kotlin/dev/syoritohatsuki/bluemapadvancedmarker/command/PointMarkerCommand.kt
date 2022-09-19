@@ -7,6 +7,7 @@ import com.mojang.brigadier.context.CommandContext
 import de.bluecolored.bluemap.api.BlueMapAPI
 import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry.commandLiteral
 import dev.syoritohatsuki.bluemapadvancedmarker.util.MarkerHelper
+import dev.syoritohatsuki.bluemapadvancedmarker.util.PlayerCacheManager
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 
@@ -43,11 +44,17 @@ object PointMarkerCommand {
 
     private fun executeRemovePoint(context: CommandContext<ServerCommandSource>): Int {
         BlueMapAPI.getInstance().get().maps.forEach { map ->
-            map.markerSets.values.forEach {
-                it.markers.remove(StringArgumentType.getString(context, "name"))
+            map.markerSets.values.forEach { set ->
+                set.markers.remove(
+                    "${PlayerCacheManager.getPlayer(context.source.playerOrThrow.uuid)}/${
+                        StringArgumentType.getString(
+                            context,
+                            "name"
+                        )
+                    }"
+                )
             }
         }
         return Command.SINGLE_SUCCESS
-        TODO("Remove marker by name")
     }
 }
