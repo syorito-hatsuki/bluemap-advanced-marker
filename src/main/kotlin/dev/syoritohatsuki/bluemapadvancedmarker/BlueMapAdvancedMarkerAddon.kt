@@ -2,10 +2,10 @@ package dev.syoritohatsuki.bluemapadvancedmarker
 
 import com.mojang.logging.LogUtils
 import de.bluecolored.bluemap.api.BlueMapAPI
+import dev.syoritohatsuki.bluemapadvancedmarker.manager.MapManager.loadWorld
+import dev.syoritohatsuki.bluemapadvancedmarker.manager.MapManager.saveWorld
+import dev.syoritohatsuki.bluemapadvancedmarker.manager.PlayerCacheManager
 import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry
-import dev.syoritohatsuki.bluemapadvancedmarker.util.MapManager.loadWorld
-import dev.syoritohatsuki.bluemapadvancedmarker.util.MapManager.saveWorld
-import dev.syoritohatsuki.bluemapadvancedmarker.util.PlayerCacheManager
 import net.fabricmc.api.ModInitializer
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents

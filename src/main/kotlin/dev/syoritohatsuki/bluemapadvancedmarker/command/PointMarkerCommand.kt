@@ -7,9 +7,9 @@ import com.mojang.brigadier.context.CommandContext
 import de.bluecolored.bluemap.api.BlueMapAPI
 import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry.commandLiteral
 import dev.syoritohatsuki.bluemapadvancedmarker.util.MarkerHelper
-import dev.syoritohatsuki.bluemapadvancedmarker.util.PlayerCacheManager
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.text.Text
 
 object PointMarkerCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
@@ -23,9 +23,7 @@ object PointMarkerCommand {
                     )
                 ).then(
                     CommandManager.literal("remove").then(
-                        CommandManager.argument("name", StringArgumentType.string()).executes {
-                            executeRemovePoint(it)
-                        }
+                        CommandManager.argument("name", StringArgumentType.string()).executes { executeRemovePoint(it) }
                     )
                 )
             )
@@ -39,6 +37,13 @@ object PointMarkerCommand {
             context.source.world,
             context.source.playerOrThrow
         )
+        context.source.sendFeedback(
+            Text.of(
+                "Created marker at ${context.source.playerOrThrow.pos} with name ${
+                    StringArgumentType.getString(context, "name")
+                }"
+            ), false
+        )
         return Command.SINGLE_SUCCESS
     }
 
@@ -46,15 +51,17 @@ object PointMarkerCommand {
         BlueMapAPI.getInstance().get().maps.forEach { map ->
             map.markerSets.values.forEach { set ->
                 set.markers.remove(
-                    "${PlayerCacheManager.getPlayer(context.source.playerOrThrow.uuid)}/${
-                        StringArgumentType.getString(
-                            context,
-                            "name"
-                        )
+                    "${context.source.playerOrThrow.uuid}/${
+                        StringArgumentType.getString(context, "name")
                     }"
                 )
             }
         }
+        context.source.sendFeedback(
+            Text.of(
+                "Removed marker at with name ${StringArgumentType.getString(context, "name")}"
+            ), false
+        )
         return Command.SINGLE_SUCCESS
     }
 }

@@ -1,21 +1,22 @@
-package dev.syoritohatsuki.bluemapadvancedmarker.config
+package dev.syoritohatsuki.bluemapadvancedmarker.manager
 
 import de.bluecolored.bluemap.api.gson.MarkerGson
 import de.bluecolored.bluemap.api.markers.MarkerSet
+import dev.syoritohatsuki.bluemapadvancedmarker.dto.Config
+import dev.syoritohatsuki.bluemapadvancedmarker.util.bluemapMarkerSetsDir
+import dev.syoritohatsuki.bluemapadvancedmarker.util.configDir
+import dev.syoritohatsuki.bluemapadvancedmarker.util.mkdirs
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
-import java.nio.file.Paths
+import kotlin.io.path.exists
 
 object ConfigManager {
     private val json = Json { encodeDefaults = true; prettyPrint = true; ignoreUnknownKeys = true }
-    private val bluemapMarkerSetsDir: File = Paths.get("", "config", "bam", "markersets").toFile()
-    private val configDir: File = Paths.get("", "config", "bam").toFile()
-    private val configFile = File(configDir, "config.json")
+    private val configFile = File(configDir.toFile(), "config.json")
 
     init {
-        if (!bluemapMarkerSetsDir.exists()) bluemapMarkerSetsDir.mkdirs()
         if (!configFile.exists()) {
             if (!configDir.exists()) configDir.mkdirs()
             configFile.apply {
@@ -28,7 +29,7 @@ object ConfigManager {
     fun read(): Config = json.decodeFromString(configFile.readText())
 
     fun writeMarkerSet(worldId: String, uuid: String, markerSet: MarkerSet) {
-        File(bluemapMarkerSetsDir, worldId).apply {
+        File(bluemapMarkerSetsDir.toFile(), worldId).apply {
             if (!exists()) mkdir()
             File(this, "$uuid.json").apply {
                 if (!exists()) createNewFile()
@@ -38,7 +39,7 @@ object ConfigManager {
     }
 
     fun readMarkerSet(worldId: String) = mutableMapOf<String, MarkerSet>().apply {
-        File(bluemapMarkerSetsDir, worldId).listFiles()?.map {
+        File(bluemapMarkerSetsDir.toFile(), worldId).listFiles()?.map {
             put(
                 it.nameWithoutExtension,
                 MarkerGson.INSTANCE.fromJson(it.readText(), MarkerSet::class.java)

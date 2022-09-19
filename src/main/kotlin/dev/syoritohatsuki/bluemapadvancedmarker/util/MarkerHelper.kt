@@ -4,12 +4,17 @@ import de.bluecolored.bluemap.api.BlueMapAPI
 import de.bluecolored.bluemap.api.markers.MarkerSet
 import de.bluecolored.bluemap.api.markers.POIMarker
 import dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon.logger
-import dev.syoritohatsuki.bluemapadvancedmarker.config.ConfigManager
+import dev.syoritohatsuki.bluemapadvancedmarker.manager.ConfigManager
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.world.World
+import kotlin.io.path.exists
 
 object MarkerHelper {
     private val blueMapAPI = BlueMapAPI.getInstance()
+
+    init {
+        if (!bluemapMarkerSetsDir.exists()) bluemapMarkerSetsDir.mkdirs()
+    }
 
     fun createPoint(title: String, icon: String, world: World, playerEntity: PlayerEntity) {
         blueMapAPI.ifPresentOrElse({ mapAPI ->

@@ -4,11 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class PlayerCache(
-    val map: Set<Player> = emptySet(),
+    val players: Set<Player> = emptySet(),
 ) {
     @Serializable
     data class Player(
-        val name: String,
         val uuid: String,
+        val name: String,
     )
 }
