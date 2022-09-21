@@ -13,24 +13,21 @@ object PointMarkerCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
-                CommandManager.literal("point").then(
-                    CommandManager.literal("create").then(
-                        CommandManager.argument("name", StringArgumentType.string())
-                            .executes { executeAddPoint(it, false) }
-                            .then(CommandManager.argument("icon", StringArgumentType.word())
-                                .executes { executeAddPoint(it, true) })
-                    )
-                ).then(
-                    CommandManager.literal("remove").then(
-                        CommandManager.argument("name", StringArgumentType.string()).executes { executeRemovePoint(it) }
-                    )
+                CommandManager.literal("create").then(
+                    CommandManager.argument("name", StringArgumentType.string())
+                        .executes { executeAddPoint(it, false) }
+                        .then(CommandManager.argument("icon", StringArgumentType.word())
+                            .executes { executeAddPoint(it, true) })
+                )
+            ).then(
+                CommandManager.literal("remove").then(
+                    CommandManager.argument("name", StringArgumentType.string()).executes { executeRemovePoint(it) }
                 )
             )
         )
     }
 
     private fun executeAddPoint(context: CommandContext<ServerCommandSource>, withIcon: Boolean): Int {
-
         val icon: String = if (withIcon) StringArgumentType.getString(context, "icon") else ""
 
         MarkersManager.createPoint(

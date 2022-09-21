@@ -15,7 +15,7 @@ object MarkerListCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
-                CommandManager.literal("list").executes { executeUserMarkers(it) }
+                CommandManager.literal("list").executes { executeOwnMarkers(it) }
             ).then(
                 CommandManager.literal("listall").executes { executeAllUsersMarkers(it) }
             )
@@ -38,13 +38,15 @@ object MarkerListCommand {
         TODO("List all markers of specify user (User level)")
     }
 
-    private fun executeUserMarkers(context: CommandContext<ServerCommandSource>): Int {
+    private fun executeOwnMarkers(context: CommandContext<ServerCommandSource>): Int {
         context.source.sendFeedback(Text.of(StringBuilder().apply {
-            append("\n=======[ ${context.source.playerOrThrow.displayName.string} marker's ]=======\n")
+            append("\n=======[ Own marker's ]=======\n")
             BlueMapAPI.getInstance().get().maps.forEach { map ->
-                map.markerSets.filter {
-                    it.key.contains(context.source.playerOrThrow.uuidAsString)
-                }.onEach { (_, value) -> append(value.markers.values.joinToString { it.label }) }
+                append("\n  ${map.name}")
+                map.markerSets.filter { it.key.contains(context.source.playerOrThrow.uuidAsString) }
+                    .forEach { (_, value) ->
+                        value.markers.values.forEach { append("\n      Map: ${map.name} Name: ${it.label}") }
+                    }
             }
         }.toString()), false)
         Command.SINGLE_SUCCESS
