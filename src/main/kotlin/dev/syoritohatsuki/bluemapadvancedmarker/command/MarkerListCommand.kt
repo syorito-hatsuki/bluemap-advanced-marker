@@ -6,7 +6,6 @@ import com.mojang.brigadier.context.CommandContext
 import de.bluecolored.bluemap.api.BlueMapAPI
 import dev.syoritohatsuki.bluemapadvancedmarker.manager.PlayerCacheManager
 import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry.commandLiteral
-import net.minecraft.command.argument.EntityArgumentType
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.Text
@@ -16,21 +15,21 @@ object MarkerListCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
-                CommandManager.literal("list").then(
-                    CommandManager.argument("player", EntityArgumentType.player())
-                        .executes { executeUserMarkers(it) }
-                ).executes { executeAllUsersMarkers(it) }
+                CommandManager.literal("list").executes { executeUserMarkers(it) }
+            ).then(
+                CommandManager.literal("listall").executes { executeAllUsersMarkers(it) }
             )
         )
     }
 
     private fun executeAllUsersMarkers(context: CommandContext<ServerCommandSource>): Int {
         context.source.sendFeedback(Text.of(StringBuilder().apply {
-            append("=======[ All marker's ]=======")
+            append("\n=======[ All marker's ]=======")
             BlueMapAPI.getInstance().get().maps.forEach { map ->
+                append("\n  ${map.name}")
                 map.markerSets.forEach { (name, value) ->
                     value.markers.values.forEach {
-                        append("Map: ${map.name} Owner: ${PlayerCacheManager.getPlayer(UUID.fromString(name)).name} Name: ${it.label}")
+                        append("\n      Map: ${map.name} Owner: ${PlayerCacheManager.getPlayer(UUID.fromString(name)).name} Name: ${it.label}")
                     }
                 }
             }
@@ -41,10 +40,10 @@ object MarkerListCommand {
 
     private fun executeUserMarkers(context: CommandContext<ServerCommandSource>): Int {
         context.source.sendFeedback(Text.of(StringBuilder().apply {
-            append("=======[ ${EntityArgumentType.getPlayer(context, "player")} marker's ]=======")
+            append("\n=======[ ${context.source.playerOrThrow.displayName.string} marker's ]=======\n")
             BlueMapAPI.getInstance().get().maps.forEach { map ->
                 map.markerSets.filter {
-                    it.key.contains(EntityArgumentType.getPlayer(context, "player").uuid.toString())
+                    it.key.contains(context.source.playerOrThrow.uuidAsString)
                 }.onEach { (_, value) -> append(value.markers.values.joinToString { it.label }) }
             }
         }.toString()), false)
