@@ -13,9 +13,7 @@ object MarkerIconsCommand {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
                 CommandManager.literal("icons").executes { context ->
-                    context.source.sendFeedback(Text.of(
-                        ConfigManager.read().icons.keys.joinToString { it }
-                    ), false)
+                    context.source.sendFeedback(Text.of(ConfigManager.read().icons.keys.joinToString { it }), false)
                     return@executes SINGLE_SUCCESS
                 }
             )
