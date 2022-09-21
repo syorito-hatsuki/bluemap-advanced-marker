@@ -3,7 +3,7 @@
   "id": "bluemapadvancedmarker",
   "version": "${version}",
   "name": "BlueMap Advanced Marker Addon",
-  "description": "Mod Description",
+  "description": "Server-side addon for BlueMap markers management",
   "authors": [
     "Syorito Hatsuki"
   ],
