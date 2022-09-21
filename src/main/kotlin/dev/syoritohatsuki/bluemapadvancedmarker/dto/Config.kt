@@ -1,4 +1,4 @@
-package dev.syoritohatsuki.bluemapadvancedmarker.config
+package dev.syoritohatsuki.bluemapadvancedmarker.dto
 
 import kotlinx.serialization.Serializable
 

@@ -1,7 +1,6 @@
-package dev.syoritohatsuki.bluemapadvancedmarker.util
+package dev.syoritohatsuki.bluemapadvancedmarker.manager
 
 import de.bluecolored.bluemap.api.BlueMapAPI
-import dev.syoritohatsuki.bluemapadvancedmarker.config.ConfigManager
 import net.minecraft.world.World
 
 object MapManager {
