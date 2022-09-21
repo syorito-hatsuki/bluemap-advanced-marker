@@ -5,8 +5,8 @@ import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.arguments.StringArgumentType
 import com.mojang.brigadier.context.CommandContext
 import de.bluecolored.bluemap.api.BlueMapAPI
+import dev.syoritohatsuki.bluemapadvancedmarker.manager.MarkersManager
 import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry.commandLiteral
-import dev.syoritohatsuki.bluemapadvancedmarker.util.MarkerHelper
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.Text
@@ -31,7 +31,7 @@ object PointMarkerCommand {
     }
 
     private fun executeAddPoint(context: CommandContext<ServerCommandSource>): Int {
-        MarkerHelper.createPoint(
+        MarkersManager.createPoint(
             StringArgumentType.getString(context, "name"),
             StringArgumentType.getString(context, "icon"),
             context.source.world,
