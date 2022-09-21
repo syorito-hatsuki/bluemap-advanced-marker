@@ -14,10 +14,11 @@ object PointMarkerCommand {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
                 CommandManager.literal("point").then(
-                    CommandManager.literal("add").then(
-                        CommandManager.argument("name", StringArgumentType.string()).then(
-                            CommandManager.argument("icon", StringArgumentType.word()).executes { executeAddPoint(it) }
-                        )
+                    CommandManager.literal("create").then(
+                        CommandManager.argument("name", StringArgumentType.string())
+                            .executes { executeAddPoint(it, false) }
+                            .then(CommandManager.argument("icon", StringArgumentType.word())
+                                .executes { executeAddPoint(it, true) })
                     )
                 ).then(
                     CommandManager.literal("remove").then(
@@ -28,10 +29,13 @@ object PointMarkerCommand {
         )
     }
 
-    private fun executeAddPoint(context: CommandContext<ServerCommandSource>): Int {
+    private fun executeAddPoint(context: CommandContext<ServerCommandSource>, withIcon: Boolean): Int {
+
+        val icon: String = if (withIcon) StringArgumentType.getString(context, "icon") else ""
+
         MarkersManager.createPoint(
             StringArgumentType.getString(context, "name"),
-            StringArgumentType.getString(context, "icon"),
+            icon,
             context.source.world,
             context.source.playerOrThrow
         )
