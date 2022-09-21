@@ -6,6 +6,7 @@ import de.bluecolored.bluemap.api.markers.POIMarker
 import dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon.logger
 import dev.syoritohatsuki.bluemapadvancedmarker.util.bluemapMarkerSetsDir
 import dev.syoritohatsuki.bluemapadvancedmarker.util.mkdirs
+import dev.syoritohatsuki.bluemapadvancedmarker.util.toCordString
 import dev.syoritohatsuki.bluemapadvancedmarker.util.toVector3d
 import net.minecraft.entity.player.PlayerEntity
 import net.minecraft.text.Text
@@ -19,34 +20,47 @@ object MarkersManager {
         if (!bluemapMarkerSetsDir.exists()) bluemapMarkerSetsDir.mkdirs()
     }
 
-
     fun createPoint(title: String, icon: String, world: World, playerEntity: PlayerEntity) {
         blueMapAPI.ifPresentOrElse({ mapAPI ->
             mapAPI.getWorld(world).ifPresentOrElse({ blueMapWorld ->
-                if (exist("${playerEntity.uuid}", title))
-                    playerEntity.sendMessage(Text.of("Marker with name [$title] already exist")) else {
-                    if (blueMapWorld.maps.toList()[0].markerSets["${playerEntity.uuid}"] == null)
-                        blueMapWorld.maps.toList()[0].markerSets["${playerEntity.uuid}"] =
+                if (exist(playerEntity.uuidAsString, title)) {
+                    playerEntity.sendMessage(Text.of("$title marker with that name already exist"))
+                } else {
+                    if (blueMapWorld.maps.toList()[0].markerSets[playerEntity.uuidAsString] == null)
+                        blueMapWorld.maps.toList()[0].markerSets[playerEntity.uuidAsString] =
                             MarkerSet.builder().label(playerEntity.displayName.string).build()
 
-                    blueMapWorld.maps.toList()[0].markerSets["${playerEntity.uuid}"]!!.markers["${playerEntity.uuid}/$title"] =
+                    blueMapWorld.maps.toList()[0].markerSets[playerEntity.uuidAsString]!!.markers["${playerEntity.uuidAsString}/$title"] =
                         POIMarker.toBuilder()
                             .label(title)
                             .icon(ConfigManager.read().icons[icon] ?: "assets/poi.svg", 0, 0)
                             .position(playerEntity.pos.toVector3d())
                             .build()
+
+                    playerEntity.sendMessage(
+                        Text.of("Created marker at ${playerEntity.pos.toCordString()} with name $title"), false
+                    )
                 }
             }, { logger.info("BlueMapWorld not present") })
         }, { logger.info("MapAPI not present") })
     }
 
-    fun removeMarker() {
-
+    fun removeMarker(title: String, playerEntity: PlayerEntity) {
+        blueMapAPI.ifPresentOrElse({ mapAPI ->
+            if (exist(playerEntity.uuidAsString, title)) {
+                mapAPI.maps.forEach { map ->
+                    map.markerSets.values.forEach { set -> set.markers.remove("${playerEntity.uuidAsString}/${title}") }
+                }
+                playerEntity.sendMessage(Text.of("Removed marker with name $title"), false)
+            } else {
+                playerEntity.sendMessage(Text.of("Marker not found"), false)
+            }
+        }, { logger.info("MapAPI not present") })
     }
 
     private fun exist(playerUUID: String, markerName: String): Boolean {
-        blueMapAPI.get().maps.onEach { map ->
-            map.markerSets.onEach { if (it.value.markers.keys.contains("$playerUUID/$markerName")) return true }
+        blueMapAPI.get().maps.forEach { map ->
+            map.markerSets.forEach { if (it.value.markers.keys.contains("$playerUUID/$markerName")) return true }
         }
         return false
     }
