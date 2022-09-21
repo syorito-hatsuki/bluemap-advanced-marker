@@ -9,7 +9,12 @@ Server-side addon for BlueMap markers management
 ## Commands
 * `/bam` or `/bam help` - All available commands
 * `/bam icons` - List of available icons ID
-* `/bam point <name> <icon_id>` - Create point to map 
+* `/bam list` - List own markers
+* `/bam listall` - List all players markers
+* `/bam create <name> <icon_id?>` - Create point to map
+* `/bam remove <name>` - Remove point from map
+
+> ? is optional parameters
 
 ## Custom icons
 If you want to add your own icons, add the following line to `./config/bam/config.json`. New icons can be use same time after file saved
