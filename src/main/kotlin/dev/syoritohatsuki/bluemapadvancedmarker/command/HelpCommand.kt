@@ -27,7 +27,7 @@ object HelpCommand {
                     append("\n/$commandLiteral create <name> <icon?>")
                     append("\n/$commandLiteral remove <name>")
                     append("\n------------------------------")
-                    append("\n'?' = Optional parameters")
+                    append("\n\"?\" = Optional parameters")
                     append("\n------------------------------")
                 }.toString()
             ), false
