@@ -21,8 +21,13 @@ object HelpCommand {
             Text.literal(
                 StringBuilder().apply {
                     append("\n----------[ BAM Help ]----------")
+                    append("\n/$commandLiteral help")
                     append("\n/$commandLiteral icons")
-                    append("\n/$commandLiteral point <name> <icon>")
+                    append("\n/$commandLiteral list <user?>")
+                    append("\n/$commandLiteral create <name> <icon?>")
+                    append("\n/$commandLiteral remove <name>")
+                    append("\n------------------------------")
+                    append("\n'?' = Optional parameters")
                     append("\n------------------------------")
                 }.toString()
             ), false
