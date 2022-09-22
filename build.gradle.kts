@@ -27,6 +27,11 @@ repositories {
         name = "JitPack"
         setUrl("https://jitpack.io")
     }
+    maven {
+        name = "OSS Sonatype"
+        setUrl("https://oss.sonatype.org/content/repositories/snapshots")
+    }
+
 }
 
 dependencies {
@@ -35,6 +40,9 @@ dependencies {
 
     val yarnMappings: String by project
     mappings("net.fabricmc", "yarn", yarnMappings, null, "v2")
+
+    val blueMapApiVersion: String by project
+    implementation("com.github.BlueMap-Minecraft", "BlueMapAPI", blueMapApiVersion)
 
     val loaderVersion: String by project
     modImplementation("net.fabricmc", "fabric-loader", loaderVersion)
@@ -45,8 +53,8 @@ dependencies {
     val fabricKotlinVersion: String by project
     modImplementation("net.fabricmc", "fabric-language-kotlin", fabricKotlinVersion)
 
-    val blueMapApiVersion: String by project
-    implementation("com.github.BlueMap-Minecraft", "BlueMapAPI", blueMapApiVersion)
+    val fabricPermissionsApiVersion: String by project
+    include(modImplementation("me.lucko", "fabric-permissions-api", fabricPermissionsApiVersion))
 }
 
 tasks {
