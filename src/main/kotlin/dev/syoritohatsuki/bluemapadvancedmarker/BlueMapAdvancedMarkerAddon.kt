@@ -15,6 +15,7 @@ import org.slf4j.Logger
 
 object BlueMapAdvancedMarkerAddon : ModInitializer {
     val logger: Logger = LogUtils.getLogger()
+    const val MOD_ID = "bluemapadvancedmarker"
 
     override fun onInitialize() {
         logger.info("${javaClass.simpleName} initialized")

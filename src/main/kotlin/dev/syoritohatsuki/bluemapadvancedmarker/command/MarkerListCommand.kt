@@ -4,8 +4,10 @@ import com.mojang.brigadier.Command
 import com.mojang.brigadier.CommandDispatcher
 import com.mojang.brigadier.context.CommandContext
 import de.bluecolored.bluemap.api.BlueMapAPI
+import dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon.MOD_ID
 import dev.syoritohatsuki.bluemapadvancedmarker.manager.PlayerCacheManager
 import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry.commandLiteral
+import me.lucko.fabric.api.permissions.v0.Permissions
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
 import net.minecraft.text.Text
@@ -15,9 +17,13 @@ object MarkerListCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
             CommandManager.literal(commandLiteral).then(
-                CommandManager.literal("list").executes { executeOwnMarkers(it) }
+                CommandManager.literal("list").requires(
+                    Permissions.require("$MOD_ID.list", 0)
+                ).executes { executeOwnMarkers(it) }
             ).then(
-                CommandManager.literal("listall").executes { executeAllUsersMarkers(it) }
+                CommandManager.literal("listall").requires(
+                    Permissions.require("$MOD_ID.listall", 2)
+                ).executes { executeAllUsersMarkers(it) }
             )
         )
     }
@@ -34,8 +40,7 @@ object MarkerListCommand {
                 }
             }
         }.toString()), false)
-        Command.SINGLE_SUCCESS
-        TODO("List all markers of specify user (User level)")
+        return Command.SINGLE_SUCCESS
     }
 
     private fun executeOwnMarkers(context: CommandContext<ServerCommandSource>): Int {
@@ -49,7 +54,6 @@ object MarkerListCommand {
                     }
             }
         }.toString()), false)
-        Command.SINGLE_SUCCESS
-        TODO("List all users markers (Admin level)")
+        return Command.SINGLE_SUCCESS
     }
 }
