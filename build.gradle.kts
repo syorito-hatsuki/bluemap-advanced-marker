@@ -57,6 +57,22 @@ dependencies {
     include(modImplementation("me.lucko", "fabric-permissions-api", fabricPermissionsApiVersion))
 }
 
+val createBuildClassFile = task("createBuildClassFile") {
+    doFirst {
+        val archivesBaseName: String by project
+        val packagePath = mavenGroup + "." + archivesBaseName.replace("-", "")
+        val path =
+            "src${File.separator}main${File.separator}kotlin${File.separator}${
+                packagePath.replace(".", File.separator)
+            }${File.separator}util"
+
+        File(path, "ModData.kt").writeText(
+            "package $packagePath.util\n\n" +
+                    "fun getVersion(): String = \"${project.version}\""
+        )
+    }
+}
+
 tasks {
     val javaVersion = JavaVersion.VERSION_17
 
@@ -67,7 +83,10 @@ tasks {
         options.release.set(javaVersion.toString().toInt())
     }
 
-    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> { kotlinOptions { jvmTarget = javaVersion.toString() } }
+    withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+        kotlinOptions { jvmTarget = javaVersion.toString() }
+        dependsOn(createBuildClassFile)
+    }
 
     jar { from("LICENSE") { rename { "${it}_${base.archivesName}" } } }
 

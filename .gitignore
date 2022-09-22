@@ -21,6 +21,7 @@ out/
 .gradle
 **/build/
 !src/**/build/
+/src/main/kotlin/dev/syoritohatsuki/bluemapadvancedmarker/util/ModData.kt
 
 # Ignore Gradle GUI config
 gradle-app.setting

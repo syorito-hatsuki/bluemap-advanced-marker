@@ -13,10 +13,11 @@ import net.minecraft.text.Text
 object HelpCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
-            CommandManager.literal(commandLiteral).executes { executeHelp(it) }
-                .then(CommandManager.literal("help").requires(
+            CommandManager.literal(commandLiteral).then(
+                CommandManager.literal("help").requires(
                     Permissions.require("${BlueMapAdvancedMarkerAddon.MOD_ID}.help", 0)
-                ).executes { executeHelp(it) })
+                ).executes { executeHelp(it) }
+            )
         )
     }
 
@@ -31,6 +32,7 @@ object HelpCommand {
                     append("\n/$commandLiteral listall")
                     append("\n/$commandLiteral create <name> <icon?>")
                     append("\n/$commandLiteral remove <name>")
+                    append("\n/$commandLiteral version")
                     append("\n------------------------------")
                     append("\n\"?\" = Optional parameters")
                     append("\n------------------------------")
