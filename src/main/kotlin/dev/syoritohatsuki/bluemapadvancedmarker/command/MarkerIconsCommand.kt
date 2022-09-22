@@ -13,13 +13,12 @@ import net.minecraft.text.Text
 object MarkerIconsCommand {
     fun register(dispatcher: CommandDispatcher<ServerCommandSource>) {
         dispatcher.register(
-            CommandManager.literal(commandLiteral).requires(
-                Permissions.require("$MOD_ID.icons", 0)
-            ).then(
-                CommandManager.literal("icons").executes { context ->
-                    context.source.sendFeedback(Text.of(ConfigManager.read().icons.keys.joinToString { it }), false)
-                    return@executes SINGLE_SUCCESS
-                }
+            CommandManager.literal(commandLiteral).then(
+                CommandManager.literal("icons").requires(Permissions.require("$MOD_ID.icons", 0))
+                    .executes { context ->
+                        context.source.sendFeedback(Text.of(ConfigManager.read().icons.keys.joinToString { it }), false)
+                        return@executes SINGLE_SUCCESS
+                    }
             )
         )
     }
