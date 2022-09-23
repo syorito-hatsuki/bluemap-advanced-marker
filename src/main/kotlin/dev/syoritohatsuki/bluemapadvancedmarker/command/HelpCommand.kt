@@ -31,7 +31,7 @@ object HelpCommand {
                     append("\n/$commandLiteral list")
                     append("\n/$commandLiteral listall")
                     append("\n/$commandLiteral create <name> <icon?>")
-                    append("\n/$commandLiteral remove <name>")
+                    append("\n/$commandLiteral remove <name> <owner?>")
                     append("\n/$commandLiteral version")
                     append("\n------------------------------")
                     append("\n\"?\" = Optional parameters")
