@@ -11,18 +11,18 @@ Server-side addon for BlueMap markers management
 * `/bam icons` - List of available icons ID
 * `/bam list` - List own markers
 * `/bam listall` - List all players markers
-* `/bam create <name> <icon_id?>` - Create point to map
-* `/bam remove <name>` - Remove point from map
+* `/bam create <name> [<icon>]` - Create point to map
+* `/bam remove <name> [<owner>]` - Remove point from map
 * `/bam version` - Version command. Not require any permissions
-
-> ? is optional parameters
 
 ## Permissions
 * `bluemapadvancedmarker.help`
 * `bluemapadvancedmarker.create`
 * `bluemapadvancedmarker.remove`
+  * `bluemapadvancedmarker.remove.other`
 * `bluemapadvancedmarker.icons`
 * `bluemapadvancedmarker.list`
+  * `bluemapadvancedmarker.list.other`
 * `bluemapadvancedmarker.listall`
 
 ## Custom icons
