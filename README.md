@@ -26,7 +26,7 @@ Server-side addon for BlueMap markers management
 * `bluemapadvancedmarker.listall`
 
 ## Custom icons
-If you want to add your own icons, add the following line to `./config/bam/config.json`. New icons can be use same time after file saved
+If you want to add your own icons, add the following line to `./config/bam/config.json`. New icons can be used same time after the file saved
 ```json5
 {
     "icons": {
