@@ -8,7 +8,7 @@ data class PlayerCache(
 ) {
     @Serializable
     data class Player(
-        val uuid: String,
-        val name: String,
+        val uuid: String = "",
+        val name: String = "",
     )
 }

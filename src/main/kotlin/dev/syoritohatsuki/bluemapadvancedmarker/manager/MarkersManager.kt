@@ -45,11 +45,17 @@ object MarkersManager {
         }, { logger.info("MapAPI not present") })
     }
 
-    fun removeMarker(title: String, playerEntity: PlayerEntity) {
+    fun removeMarker(title: String, playerEntity: PlayerEntity, playerUUID: String) {
+
+        if (playerUUID == "") {
+            playerEntity.sendMessage(Text.of("Player not found"))
+            return
+        }
+
         blueMapAPI.ifPresentOrElse({ mapAPI ->
-            if (exist(playerEntity.uuidAsString, title)) {
+            if (exist(playerUUID, title)) {
                 mapAPI.maps.forEach { map ->
-                    map.markerSets.values.forEach { set -> set.markers.remove("${playerEntity.uuidAsString}/${title}") }
+                    map.markerSets.values.forEach { set -> set.markers.remove("$playerUUID/$title") }
                 }
                 playerEntity.sendMessage(Text.of("Removed marker with name $title"), false)
             } else {

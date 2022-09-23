@@ -35,7 +35,19 @@ object PlayerCacheManager {
         }
     }
 
-    fun getPlayer(uuid: UUID): Player = read().players.filter { it.uuid == uuid.toString() }[0]
+    fun getPlayer(uuid: UUID): Player {
+        val player = read().players.filter { it.uuid == uuid.toString() }
+        return when {
+            player.isNotEmpty() -> player[0]
+            else -> return Player()
+        }
+    }
 
-    fun getPlayer(name: String): Player = read().players.filter { it.name == name }[0]
+    fun getPlayer(name: String): Player {
+        val player = read().players.filter { it.name == name }
+        return when {
+            player.isNotEmpty() -> player[0]
+            else -> return Player()
+        }
+    }
 }
