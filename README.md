@@ -6,18 +6,18 @@
 ## Description
 Server-side addon for BlueMap markers management
 
-## Commands and permissions
-|           Command          | OP |             Permission             |             Description            |
-|:--------------------------:|:--:|:----------------------------------:|:----------------------------------:|
-|          `/bam help`         |  ❌ |     `bluemapadvancedmarker.help`     |       All available commands       |
-|         `/bam icons`         |  ❌ |     `bluemapadvancedmarker.icons`    |     List of available icons ID     |
-|          `/bam list`         |  ❌ |     `bluemapadvancedmarker.list`     |          List own markers          |
-|     `/bam list [player]`     |  ✅ |  `bluemapadvancedmarker.list.other`  |      List other player markers     |
-|        `/bam listall`        |  ✅ |    `bluemapadvancedmarker.listall`   |      List all players markers      |
-|  `/bam create [name] [icon]` |  ❌ |    `bluemapadvancedmarker.create`    |         Create point to map        |
-|     `/bam remove [name]`     |  ❌ |    `bluemapadvancedmarker.remove`    |        Remove point from map       |
-| `/bam remove [name] [owner]` |  ✅ | `bluemapadvancedmarker.remove.other` | Remove other player point from map |
-|        `/bam version`        |  ❌ |                                    |           Version command          |
+## Commands and permission
+|            Command           | OP |              Permission              |              Description           |
+|------------------------------|----|--------------------------------------|------------------------------------|
+|          `/bam help`         | ❌ |     `bluemapadvancedmarker.help`     |       All available commands       |
+|         `/bam icons`         | ❌ |     `bluemapadvancedmarker.icons`    |     List of available icons ID     |
+|          `/bam list`         | ❌ |     `bluemapadvancedmarker.list`     |          List own markers          |
+|     `/bam list [player]`     | ✅ |  `bluemapadvancedmarker.list.other`  |      List other player markers     |
+|        `/bam listall`        | ✅ |    `bluemapadvancedmarker.listall`   |      List all players markers      |
+|  `/bam create [name] [icon]` | ❌ |    `bluemapadvancedmarker.create`    |         Create point to map        |
+|     `/bam remove [name]`     | ❌ |    `bluemapadvancedmarker.remove`    |        Remove point from map       |
+| `/bam remove [name] [owner]` | ✅ | `bluemapadvancedmarker.remove.other` | Remove other player point from map |
+|        `/bam version`        | ❌ |                                      |           Version command          |
 
 ## Custom icons
 If you want to add your own icons, add the following line to `./config/bam/config.json`. New icons can be used same time after the file saved
