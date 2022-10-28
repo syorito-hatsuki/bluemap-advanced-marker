@@ -2,6 +2,8 @@ package dev.syoritohatsuki.bluemapadvancedmarker.manager
 
 import de.bluecolored.bluemap.api.gson.MarkerGson
 import de.bluecolored.bluemap.api.markers.MarkerSet
+import dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon
+import dev.syoritohatsuki.bluemapadvancedmarker.BlueMapAdvancedMarkerAddon.logger
 import dev.syoritohatsuki.bluemapadvancedmarker.dto.Config
 import dev.syoritohatsuki.bluemapadvancedmarker.util.bluemapMarkerSetsDir
 import dev.syoritohatsuki.bluemapadvancedmarker.util.configDir
@@ -10,6 +12,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import java.io.File
+import java.util.*
 import kotlin.io.path.exists
 
 object ConfigManager {
@@ -40,10 +43,21 @@ object ConfigManager {
 
     fun readMarkerSet(worldId: String) = mutableMapOf<String, MarkerSet>().apply {
         File(bluemapMarkerSetsDir.toFile(), worldId).listFiles()?.map {
-            put(
-                it.nameWithoutExtension,
-                MarkerGson.INSTANCE.fromJson(it.readText(), MarkerSet::class.java)
-            )
+            try {
+                put(
+                    it.nameWithoutExtension,
+                    MarkerGson.INSTANCE.fromJson(it.readText(), MarkerSet::class.java)
+                )
+            } catch (e: Exception) {
+                val name = PlayerCacheManager.getPlayer(UUID.fromString(it.nameWithoutExtension)).name
+                val localizeUUID = if (name != "") {
+                    "($name) "
+                } else {
+                    ""
+                }
+                logger.error("$worldId/${it.name} ${localizeUUID}is empty or corrupted")
+                logger.error(e.message)
+            }
         }
     }
 }
