@@ -24,7 +24,7 @@ object MarkersManager {
         blueMapAPI.ifPresentOrElse({ mapAPI ->
             mapAPI.getWorld(world).ifPresentOrElse({ blueMapWorld ->
                 if (exist(playerEntity.uuidAsString, title)) {
-                    playerEntity.sendMessage(Text.of("$title marker with that name already exist"))
+                    playerEntity.sendMessage(Text.of("$title marker with that name already exist"), false)
                 } else {
                     if (blueMapWorld.maps.toList()[0].markerSets[playerEntity.uuidAsString] == null)
                         blueMapWorld.maps.toList()[0].markerSets[playerEntity.uuidAsString] =
@@ -48,7 +48,7 @@ object MarkersManager {
     fun removeMarker(title: String, playerEntity: PlayerEntity, playerUUID: String) {
 
         if (playerUUID == "") {
-            playerEntity.sendMessage(Text.of("Player not found"))
+            playerEntity.sendMessage(Text.of("Player not found"), false)
             return
         }
 

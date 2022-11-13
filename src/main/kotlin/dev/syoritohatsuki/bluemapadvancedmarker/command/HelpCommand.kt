@@ -8,6 +8,7 @@ import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry.command
 import me.lucko.fabric.api.permissions.v0.Permissions
 import net.minecraft.server.command.CommandManager
 import net.minecraft.server.command.ServerCommandSource
+import net.minecraft.text.LiteralText
 import net.minecraft.text.Text
 
 object HelpCommand {
@@ -23,7 +24,7 @@ object HelpCommand {
 
     private fun executeHelp(context: CommandContext<ServerCommandSource>): Int {
         context.source.sendFeedback(
-            Text.literal(
+            LiteralText(
                 StringBuilder().apply {
                     append("\n----------[ BAM Help ]----------")
                     append("\n/$commandLiteral help")

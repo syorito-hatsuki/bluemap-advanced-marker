@@ -7,7 +7,7 @@ import dev.syoritohatsuki.bluemapadvancedmarker.manager.MapManager.saveWorld
 import dev.syoritohatsuki.bluemapadvancedmarker.manager.PlayerCacheManager
 import dev.syoritohatsuki.bluemapadvancedmarker.registry.CommandRegistry
 import net.fabricmc.api.ModInitializer
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents.ServerStarted
 import net.fabricmc.fabric.api.networking.v1.ServerPlayConnectionEvents
@@ -19,7 +19,7 @@ object BlueMapAdvancedMarkerAddon : ModInitializer {
 
     override fun onInitialize() {
         logger.info("${javaClass.simpleName} initialized")
-        CommandRegistrationCallback.EVENT.register(CommandRegistrationCallback { dispatcher, _, _ ->
+        CommandRegistrationCallback.EVENT.register(CommandRegistrationCallback { dispatcher, _ ->
             CommandRegistry.register(dispatcher)
         })
 

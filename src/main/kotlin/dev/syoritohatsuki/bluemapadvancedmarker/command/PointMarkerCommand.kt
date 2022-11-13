@@ -45,7 +45,7 @@ object PointMarkerCommand {
             StringArgumentType.getString(context, "name"),
             icon,
             context.source.world,
-            context.source.playerOrThrow
+            context.source.player
         )
         return Command.SINGLE_SUCCESS
     }
@@ -53,8 +53,8 @@ object PointMarkerCommand {
     private fun executeRemovePoint(context: CommandContext<ServerCommandSource>): Int {
         MarkersManager.removeMarker(
             StringArgumentType.getString(context, "name"),
-            context.source.playerOrThrow,
-            context.source.playerOrThrow.uuidAsString
+            context.source.player,
+            context.source.player.uuidAsString
         )
         return Command.SINGLE_SUCCESS
     }
@@ -67,7 +67,7 @@ object PointMarkerCommand {
 
         MarkersManager.removeMarker(
             StringArgumentType.getString(context, "name"),
-            context.source.playerOrThrow,
+            context.source.player,
             uuid
         )
         return Command.SINGLE_SUCCESS

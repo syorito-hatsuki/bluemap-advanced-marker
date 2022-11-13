@@ -57,7 +57,7 @@ object MarkerListCommand {
             append("\n=======[ Own marker's ]=======\n")
             BlueMapAPI.getInstance().get().maps.forEach { map ->
                 append("\n  ${map.name}")
-                map.markerSets.filter { it.key.contains(context.source.playerOrThrow.uuidAsString) }
+                map.markerSets.filter { it.key.contains(context.source.player.uuidAsString) }
                     .forEach { (_, value) ->
                         value.markers.values.forEach { append("\n      Map: ${map.name} Name: ${it.label}") }
                     }
